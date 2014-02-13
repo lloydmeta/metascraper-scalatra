@@ -8,6 +8,7 @@ import org.scalatra.json._
 import com.beachape.metascraper.Messages.ScrapedData
 import scala.concurrent.ExecutionContext
 
+case class ScrapeRequest(url: String)
 
 class MetascraperScalatraServlet(val scraper: MetadataScraper)(implicit val executor: ExecutionContext)
   extends MetascraperScalatraStack
@@ -28,6 +29,16 @@ class MetascraperScalatraServlet(val scraper: MetadataScraper)(implicit val exec
     new AsyncResult {
       contentType = formats("json")
       val is = scraper.scrape(params.getOrElse("url", "notProvided")) map {
+        case Right(data) => data
+        case Left(err) => Map("error" -> err.getMessage)
+      }
+    }
+  }
+
+  post("/scrape", request.contentType == Some(formats("json"))) {
+    new AsyncResult {
+      contentType = formats("json")
+      val is = scraper.scrape(parsedBody.extract[ScrapeRequest].url) map {
         case Right(data) => data
         case Left(err) => Map("error" -> err.getMessage)
       }
