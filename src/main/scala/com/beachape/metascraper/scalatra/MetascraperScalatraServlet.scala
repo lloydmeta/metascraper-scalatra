@@ -22,7 +22,6 @@ class MetascraperScalatraServlet(val scraper: MetadataScraper)(implicit val exec
 
   protected implicit val jsonFormats: Formats = DefaultFormats.withBigDecimal
 
-
   get("/") {
     <html>
       <body>
@@ -37,20 +36,28 @@ class MetascraperScalatraServlet(val scraper: MetadataScraper)(implicit val exec
       contentType = formats("json")
       val is = scraper.scrape(url) map {
         case Right(data) => data
-        case Left(err) => Map("error" -> err.getMessage)
+        case Left(err) => {
+          status = 422
+          Map("error" -> err.getMessage)
+        }
       }
     }
   }
 
-  def urlPostParam (req: HttpServletRequest): String = {
-    val notPovidedUrl = "notProvided"
-    req.contentType match {
-      case Some(cType) if cType == formats("json") => {
-        try { parsedBody.extract[ScrapeRequest].url }
-        catch { case _ => notPovidedUrl }
-      }
-      case _ => params.getOrElse("url", notPovidedUrl)
+  /**
+   * Given the current request, extracts out the "url" field
+   * regardless of if the request was a JSON or x-www-form-urlencoded
+   * body
+   *
+   * @param req HttpServletRequest
+   * @return String
+   */
+  private def urlPostParam (req: HttpServletRequest, notPovidedUrl: String = "notProvided"): String = req.contentType match {
+    case Some(cType) if cType == formats("json") => {
+      try { parsedBody.extract[ScrapeRequest].url }
+      catch { case _ => notPovidedUrl }
     }
+    case _ => params.getOrElse("url", notPovidedUrl)
   }
 
 }
