@@ -23,7 +23,7 @@ class MetascraperScalatraServletSpec extends TestKit(ActorSystem("testSystem")) 
   }
 
   trait UnSuccessful {
-    def pathTo(rootPath: String) = s"fail${rootPath}"
+    def pathTo(rootPath: String) = s"/fail${rootPath}"
   }
 
   test("getting root") {
