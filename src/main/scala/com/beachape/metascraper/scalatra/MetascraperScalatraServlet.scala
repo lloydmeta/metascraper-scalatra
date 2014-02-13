@@ -2,7 +2,7 @@ package com.beachape.metascraper.scalatra
 
 import org.scalatra._
 import scalate.ScalateSupport
-import com.beachape.metascraper.scalatra.models.MetadataScraper
+import com.beachape.metascraper.scalatra.models.{Scraper, MetadataScraper}
 import org.json4s.{DefaultFormats, Formats}
 import org.scalatra.json._
 import com.beachape.metascraper.Messages.ScrapedData
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest
  */
 case class ScrapeRequest(url: String)
 
-class MetascraperScalatraServlet(val scraper: MetadataScraper)(implicit val executor: ExecutionContext)
+class MetascraperScalatraServlet(val scraper: Scraper)(implicit val executor: ExecutionContext)
   extends MetascraperScalatraStack
   with JacksonJsonSupport
   with FutureSupport {
