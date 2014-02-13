@@ -1,16 +1,23 @@
 package com.beachape.metascraper.scalatra
 
-import org.scalatra.test.specs2._
+import org.scalatra.test.scalatest._
+import org.scalatest.FunSuite
+import akka.actor.ActorSystem
+import akka.testkit.{TestActorRef, TestKit, ImplicitSender}
+import com.beachape.metascraper.scalatra.models.MetadataScraper
 
-// For more on Specs2, see http://etorreborre.github.com/specs2/guide/org.specs2.guide.QuickStart.html
-class MetascraperScalatraServletSpec extends ScalatraSpec { def is =
-  "GET / on MetascraperScalatraServlet"                     ^
-    "should return status 200"                  ! root200^
-                                                end
+class MetascraperScalatraServletSpec extends TestKit(ActorSystem("testSystem")) with ScalatraSuite with FunSuite  {
 
-  addServlet(classOf[MetascraperScalatraServlet], "/*")
+  // Get a handle to an ActorSystem
+  implicit val testActorSystem = system
+  implicit val ec = system.dispatcher
+  val scraper = MetadataScraper(10)
 
-  def root200 = get("/") {
-    status must_== 200
+  addServlet(new MetascraperScalatraServlet(scraper), "/*")
+
+  test("getting root") {
+    get("/") {
+      status should equal (200)
+    }
   }
 }

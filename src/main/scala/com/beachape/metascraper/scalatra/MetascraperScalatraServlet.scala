@@ -55,7 +55,7 @@ class MetascraperScalatraServlet(val scraper: MetadataScraper)(implicit val exec
   private def urlPostParam (req: HttpServletRequest, notPovidedUrl: String = "notProvided"): String = req.contentType match {
     case Some(cType) if cType == formats("json") => {
       try { parsedBody.extract[ScrapeRequest].url }
-      catch { case _ => notPovidedUrl }
+      catch { case _: Throwable => notPovidedUrl }
     }
     case _ => params.getOrElse("url", notPovidedUrl)
   }
