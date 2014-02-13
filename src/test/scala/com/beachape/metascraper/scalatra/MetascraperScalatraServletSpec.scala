@@ -3,8 +3,7 @@ package com.beachape.metascraper.scalatra
 import org.scalatra.test.scalatest._
 import org.scalatest.FunSuite
 import akka.actor.ActorSystem
-import akka.testkit.{TestActorRef, TestKit, ImplicitSender}
-import com.beachape.metascraper.scalatra.models.MetadataScraper
+import akka.testkit.TestKit
 
 class MetascraperScalatraServletSpec extends TestKit(ActorSystem("testSystem")) with ScalatraSuite with FunSuite {
 
