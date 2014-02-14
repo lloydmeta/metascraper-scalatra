@@ -1,5 +1,7 @@
 # Metascraper Scalatra #
 
+WIP. Look elsewhere
+
 ## Build & Run ##
 
 ```sh
