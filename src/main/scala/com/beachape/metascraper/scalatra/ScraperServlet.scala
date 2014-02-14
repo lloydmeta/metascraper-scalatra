@@ -45,10 +45,10 @@ class ScraperServlet(val scraper: Scraper, val memcached: Memcached)(implicit va
     (apiOperation[List[ScrapedData]]("scrape")
       summary "Scrape the metadata from a URL"
       notes "Scrape the metadata from a URL. Gives images, descriptions, titles, URL."
-      parameter bodyParam[String]("url").description("URL to scrape"))
+      parameter pathParam[String]("url").description("URL to scrape"))
 
-  post("/scrape",  operation(scrape)) {
-    val url = urlPostParam(request)
+  get("/scrape/:url",  operation(scrape)) {
+    val url = params("url")
     new AsyncResult {
       contentType = formats("json")
       val is = fetchCachedScrapedData(url) flatMap {
@@ -69,22 +69,6 @@ class ScraperServlet(val scraper: Scraper, val memcached: Memcached)(implicit va
         }
       }
     }
-  }
-
-  /**
-   * Given the current request, extracts out the "url" field
-   * regardless of if the request was a JSON or x-www-form-urlencoded
-   * body
-   *
-   * @param req HttpServletRequest
-   * @return String
-   */
-  private def urlPostParam(req: HttpServletRequest, notPovidedUrl: String = "notProvided"): String = req.contentType match {
-    case Some(cType) if cType == formats("json") => {
-      try { parsedBody(req).extract[ScrapeRequest].url }
-      catch { case _: Throwable => notPovidedUrl }
-    }
-    case _ => params(req).getOrElse("url", notPovidedUrl)
   }
 
 }

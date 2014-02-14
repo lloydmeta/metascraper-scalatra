@@ -4,12 +4,14 @@ import org.scalatra.test.scalatest._
 import org.scalatest.FunSuite
 import akka.actor.ActorSystem
 import akka.testkit.TestKit
+import java.net.URLEncoder
 
 class ScraperServletSpec extends TestKit(ActorSystem("testSystem")) with ScalatraSuite with FunSuite {
 
   // Get a handle to an ActorSystem
   implicit val testActorSystem = system
   implicit val ec = system.dispatcher
+  implicit val swagger = new ScrapperSwagger
 
   val scraperSuccessful = new MockScraper(false)
   val scraperUnsuccessful = new MockScraper(true)
@@ -38,33 +40,33 @@ class ScraperServletSpec extends TestKit(ActorSystem("testSystem")) with Scalatr
     }
   }
 
-  test("POSTing to /scrape with JSON with a URL parameter when the Scraper is successful") {
+  test("GETing to /scrape with JSON with a URL parameter when the Scraper is successful") {
     new Successful {
-      post(pathTo("/scrape"), """{"url":  "http://lol.com"}""", Map("Content-Type" -> "application/json")) {
+      get(pathTo(String.format("/scrape/%s", URLEncoder.encode("http://lol.com", "UTF-8")))) {
         status should equal (200)
       }
     }
   }
 
-  test("POSTing to /scrape with x-www-form-urlencoded with a URL parameter when the Scraper is successful") {
+  test("GETing to /scrape with x-www-form-urlencoded with a URL parameter when the Scraper is successful") {
     new Successful {
-      post(pathTo("/scrape"), "url" -> "http://lol.com") {
+      get(pathTo(String.format("/scrape/%s", URLEncoder.encode("http://lol.com", "UTF-8")))) {
         status should equal (200)
       }
     }
   }
 
-  test("POSTing to /scrape with JSON with a URL parameter when the Scraper is unsuccessful") {
+  test("GETing to /scrape with JSON with a URL parameter when the Scraper is unsuccessful") {
     new UnSuccessful {
-      post(pathTo("/scrape"), """{"url":  "http://lol.com"}""", Map("Content-Type" -> "application/json")) {
+      get(pathTo(String.format("/scrape/%s", URLEncoder.encode("http://lol.com", "UTF-8")))) {
         status should equal (422)
       }
     }
   }
 
-  test("POSTing to /scrape with x-www-form-urlencoded with a URL parameter when the Scraper is unsuccessful") {
+  test("GETing to /scrape with x-www-form-urlencoded with a URL parameter when the Scraper is unsuccessful") {
     new UnSuccessful {
-      post(pathTo("/scrape"), "url" -> "http://lol.com") {
+      get(pathTo(String.format("/scrape/%s", URLEncoder.encode("http://lol.com", "UTF-8")))) {
         status should equal (422)
       }
     }
