@@ -1,7 +1,6 @@
 package com.beachape.metascraper.scalatra
 
 import org.scalatra._
-import scalate.ScalateSupport
 import com.beachape.metascraper.scalatra.models.{ScraperMemcachedSupport, Scraper}
 import org.json4s.{DefaultFormats, Formats}
 import org.scalatra.json._
@@ -9,7 +8,7 @@ import scala.concurrent.{Future, ExecutionContext}
 import javax.servlet.http.HttpServletRequest
 import shade.memcached._
 import scala.concurrent.duration._
-import org.slf4j.{Logger, LoggerFactory}
+import org.slf4j.LoggerFactory
 
 /**
  * Case class for extracting URL from JSON params
@@ -18,7 +17,7 @@ import org.slf4j.{Logger, LoggerFactory}
 case class ScrapeRequest(url: String)
 
 class MetascraperScalatraServlet(val scraper: Scraper, val memcached: Memcached)(implicit val executor: ExecutionContext)
-  extends MetascraperScalatraStack
+  extends ScalatraServlet
   with JacksonJsonSupport
   with FutureSupport
   with ScraperMemcachedSupport {
