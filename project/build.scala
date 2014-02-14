@@ -21,6 +21,15 @@ object MetascraperScalatraBuild extends Build {
       version := Version,
       scalaVersion := ScalaVersion,
       resolvers += Classpaths.typesafeReleases,
+      resolvers ++= Seq(
+      // where Shade lives
+        "BionicSpirit Releases" at "http://maven.bionicspirit.com/releases/",
+        "BionicSpirit Snapshots" at "http://maven.bionicspirit.com/snapshots/",
+        // just in case you don't have it already
+        "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
+        // for SpyMemcached
+        "Spy" at "http://files.couchbase.com/maven2/"
+      ),
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
@@ -32,6 +41,9 @@ object MetascraperScalatraBuild extends Build {
         "org.json4s"   %% "json4s-jackson" % "3.2.6",
         "com.typesafe.akka" %% "akka-testkit" % "2.2.3" % "test",
         "com.typesafe.akka" %% "akka-actor" % "2.2.3",
+        "com.typesafe" % "config" % "1.2.0",
+        "com.bionicspirit" %% "shade" % "1.5.0",
+        "ch.qos.logback" % "logback-classic" % "1.0.13" % "runtime",
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>

@@ -44,12 +44,27 @@ class MetascraperScalatraServletSpec extends TestKit(ActorSystem("testSystem")) 
         status should equal (200)
       }
     }
+  }
 
+  test("POSTing to /scrape with x-www-form-urlencoded with a URL parameter when the Scraper is successful") {
+    new Successful {
+      post(pathTo("/scrape"), "url" -> "http://lol.com") {
+        status should equal (200)
+      }
+    }
   }
 
   test("POSTing to /scrape with JSON with a URL parameter when the Scraper is unsuccessful") {
     new UnSuccessful {
       post(pathTo("/scrape"), """{"url":  "http://lol.com"}""", Map("Content-Type" -> "application/json")) {
+        status should equal (422)
+      }
+    }
+  }
+
+  test("POSTing to /scrape with x-www-form-urlencoded with a URL parameter when the Scraper is unsuccessful") {
+    new UnSuccessful {
+      post(pathTo("/scrape"), "url" -> "http://lol.com") {
         status should equal (422)
       }
     }
