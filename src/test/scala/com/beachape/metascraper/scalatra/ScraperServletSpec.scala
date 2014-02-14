@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 import akka.actor.ActorSystem
 import akka.testkit.TestKit
 
-class MetascraperScalatraServletSpec extends TestKit(ActorSystem("testSystem")) with ScalatraSuite with FunSuite {
+class ScraperServletSpec extends TestKit(ActorSystem("testSystem")) with ScalatraSuite with FunSuite {
 
   // Get a handle to an ActorSystem
   implicit val testActorSystem = system
@@ -14,8 +14,8 @@ class MetascraperScalatraServletSpec extends TestKit(ActorSystem("testSystem")) 
   val scraperSuccessful = new MockScraper(false)
   val scraperUnsuccessful = new MockScraper(true)
   // Mount at two different paths for testing
-  addServlet(new MetascraperScalatraServlet(scraperSuccessful, new MockMemcached), "/success/*")
-  addServlet(new MetascraperScalatraServlet(scraperUnsuccessful, new MockMemcached), "/fail/*")
+  addServlet(new ScraperServlet(scraperSuccessful, new MockMemcached), "/success/*")
+  addServlet(new ScraperServlet(scraperUnsuccessful, new MockMemcached), "/fail/*")
 
   trait Successful {
     def pathTo(rootPath: String) = s"/success${rootPath}"

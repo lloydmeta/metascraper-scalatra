@@ -27,10 +27,12 @@ class ScalatraBootstrap extends LifeCycle {
   }
   val memcached = Memcached(memConfiguration, system.scheduler, ec)
 
+  implicit val swagger = new ScrapperSwagger
 
   override def init(context: ServletContext) {
     context.initParameters("org.scalatra.environment") = env
-    context.mount(new MetascraperScalatraServlet(scraper, memcached), "/*")
+    context.mount(new ScraperServlet(scraper, memcached), "/*")
+    context mount (new ResourcesApp(), "/api-docs/*")
   }
 
   override def destroy(context:ServletContext) {

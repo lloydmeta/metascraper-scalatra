@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest
 import shade.memcached._
 import scala.concurrent.duration._
 import org.slf4j.LoggerFactory
+import org.scalatra.swagger._
+import com.beachape.metascraper.Messages.ScrapedData
 
 /**
  * Case class for extracting URL from JSON params
@@ -16,11 +18,15 @@ import org.slf4j.LoggerFactory
  */
 case class ScrapeRequest(url: String)
 
-class MetascraperScalatraServlet(val scraper: Scraper, val memcached: Memcached)(implicit val executor: ExecutionContext)
+class ScraperServlet(val scraper: Scraper, val memcached: Memcached)(implicit val executor: ExecutionContext, val swagger: Swagger)
   extends ScalatraServlet
   with JacksonJsonSupport
   with FutureSupport
-  with ScraperMemcachedSupport {
+  with ScraperMemcachedSupport
+  with SwaggerSupport {
+
+  override protected val applicationName = Some("Metascraper-Scalatra")
+  protected val applicationDescription = "The Metascraper-Scalatra API."
 
   protected implicit val jsonFormats: Formats = DefaultFormats.withBigDecimal
   val cacheDataTTL = 10 minutes
@@ -35,9 +41,14 @@ class MetascraperScalatraServlet(val scraper: Scraper, val memcached: Memcached)
     </html>
   }
 
-  post("/scrape") {
+  val scrape =
+    (apiOperation[List[ScrapedData]]("scrape")
+      summary "Scrape the metadata from a URL"
+      notes "Scrape the metadata from a URL. Gives images, descriptions, titles, URL."
+      parameter bodyParam[String]("url").description("URL to scrape"))
+
+  post("/scrape",  operation(scrape)) {
     val url = urlPostParam(request)
-    logger.info(s"Request for url: ${url}")
     new AsyncResult {
       contentType = formats("json")
       val is = fetchCachedScrapedData(url) flatMap {

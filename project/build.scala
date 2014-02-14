@@ -37,12 +37,13 @@ object MetascraperScalatraBuild extends Build {
         "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "container",
         "com.beachape.metascraper" %% "metascraper" % "0.2.5",
         "org.scalatra" %% "scalatra-json" % "2.2.2",
-        "org.json4s"   %% "json4s-jackson" % "3.2.6",
+        "org.json4s"   %% "json4s-jackson" % "3.1.0", // Going higher than this version breaks Swagger integration
         "com.typesafe.akka" %% "akka-testkit" % "2.2.3" % "test",
         "com.typesafe.akka" %% "akka-actor" % "2.2.3",
         "com.typesafe" % "config" % "1.2.0",
         "com.bionicspirit" %% "shade" % "1.5.0",
         "ch.qos.logback" % "logback-classic" % "1.0.13" % "runtime",
+        "org.scalatra" %% "scalatra-swagger"  % "2.2.2" exclude("org.slf4j", "log4j12"),
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
       )
     )
