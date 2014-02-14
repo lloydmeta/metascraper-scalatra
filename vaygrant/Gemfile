@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+
+group "development" do
+  gem "librarian-chef", '0.0.1', :platform => :ruby
+end
