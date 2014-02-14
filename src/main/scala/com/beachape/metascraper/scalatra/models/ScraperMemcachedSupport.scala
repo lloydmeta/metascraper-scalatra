@@ -12,7 +12,7 @@ trait ScraperMemcachedSupport extends MemcachedCodecs {
 
   def memcached: Memcached
   def cacheDataTTL: Duration
-  implicit def ec: ExecutionContext
+  implicit def executor: ExecutionContext
 
   implicit val serializationFormats = DefaultFormats.withBigDecimal
   /**

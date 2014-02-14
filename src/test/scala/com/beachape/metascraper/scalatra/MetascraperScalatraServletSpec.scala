@@ -11,11 +11,11 @@ class MetascraperScalatraServletSpec extends TestKit(ActorSystem("testSystem")) 
   implicit val testActorSystem = system
   implicit val ec = system.dispatcher
 
-  val scraperSuccessful = new TestScraper(false)
-  val scraperUnsuccessful = new TestScraper(true)
+  val scraperSuccessful = new MockScraper(false)
+  val scraperUnsuccessful = new MockScraper(true)
   // Mount at two different paths for testing
-  addServlet(new MetascraperScalatraServlet(scraperSuccessful), "/success/*")
-  addServlet(new MetascraperScalatraServlet(scraperUnsuccessful), "/fail/*")
+  addServlet(new MetascraperScalatraServlet(scraperSuccessful, new MockMemcached), "/success/*")
+  addServlet(new MetascraperScalatraServlet(scraperUnsuccessful, new MockMemcached), "/fail/*")
 
   trait Successful {
     def pathTo(rootPath: String) = s"/success${rootPath}"

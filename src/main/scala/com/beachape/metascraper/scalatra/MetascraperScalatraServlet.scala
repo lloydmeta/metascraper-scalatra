@@ -25,7 +25,6 @@ class MetascraperScalatraServlet(val scraper: Scraper, val memcached: Memcached)
 
   protected implicit val jsonFormats: Formats = DefaultFormats.withBigDecimal
   val cacheDataTTL = 10 minutes
-  val ec = executor
 
   val logger = LoggerFactory.getLogger(getClass)
 

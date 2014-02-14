@@ -8,15 +8,13 @@ import com.beachape.metascraper.Messages.ScrapedData
 /**
  * A mock scraper
  */
-class TestScraper(val willFail: Boolean) extends Scraper {
-
-  import ExecutionContext.Implicits.global
+class MockScraper(val willFail: Boolean) extends Scraper {
 
   def scrape(url: Url): Future[scala.Either[scala.Throwable, Messages.ScrapedData]] = {
     if (willFail) {
-      Future { Left(new IllegalArgumentException) }
+      Future.successful(Left(new IllegalArgumentException))
     } else {
-      Future { Right(ScrapedData(url, url, url, url, Seq(url))) }
+      Future.successful(Right(ScrapedData(url, url, url, url, Seq(url))))
     }
   }
 
