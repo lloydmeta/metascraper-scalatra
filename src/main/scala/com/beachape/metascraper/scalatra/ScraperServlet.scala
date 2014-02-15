@@ -5,7 +5,6 @@ import com.beachape.metascraper.scalatra.models.{ScraperMemcachedSupport, Scrape
 import org.json4s.{DefaultFormats, Formats}
 import org.scalatra.json._
 import scala.concurrent.{Future, ExecutionContext}
-import javax.servlet.http.HttpServletRequest
 import shade.memcached._
 import scala.concurrent.duration._
 import org.slf4j.LoggerFactory

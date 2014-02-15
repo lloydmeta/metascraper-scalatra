@@ -1,7 +1,7 @@
 package com.beachape.metascraper.scalatra
 
 import com.beachape.metascraper.scalatra.models.Scraper
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import com.beachape.metascraper.Messages
 import com.beachape.metascraper.Messages.ScrapedData
 

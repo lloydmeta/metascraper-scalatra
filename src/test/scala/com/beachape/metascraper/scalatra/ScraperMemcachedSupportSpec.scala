@@ -14,8 +14,8 @@ class ScraperMemcachedSupportSpec extends TestKit(ActorSystem("testSystem"))
   with FunSpec
   with ShouldMatchers
   with BeforeAndAfterAll {
-
   val ec = system.dispatcher
+
   val scheduler = system.scheduler
 
   val memcachedConnection = Memcached(Configuration("127.0.0.1:11211", keysPrefix = Some("test")), scheduler, ec)

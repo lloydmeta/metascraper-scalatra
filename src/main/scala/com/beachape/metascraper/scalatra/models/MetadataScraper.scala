@@ -13,7 +13,6 @@ import akka.actor.ActorSystem
  * Companion object to instantiate MetadataScraper instances
  */
 object MetadataScraper {
-  implicit val timeout = Timeout(30 seconds) // Urls to scrape must return before this timeout
 
   def apply(concurrency: Int = 5)(implicit system: ActorSystem): MetadataScraper = {
     new MetadataScraper(concurrency)
@@ -30,7 +29,7 @@ object MetadataScraper {
  */
 class MetadataScraper(val concurrency: Int = 5)(implicit system: ActorSystem) extends Scraper {
 
-  import MetadataScraper._
+  implicit val timeout = Timeout(30 seconds) // Urls to scrape must return before this timeout
 
   lazy val metaScraperActorsRoundRobin = system.actorOf(
     ScraperActor().withRouter(SmallestMailboxRouter(concurrency)), "router")
