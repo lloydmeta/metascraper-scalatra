@@ -15,7 +15,8 @@ object MetascraperScalatraBuild extends Build {
   lazy val project = Project (
     "metascraper-scalatra",
     file("."),
-    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
+    settings = Seq(com.typesafe.sbt.SbtStartScript.startScriptForClassesSettings: _*) ++
+      Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
@@ -34,7 +35,7 @@ object MetascraperScalatraBuild extends Build {
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
-        "org.eclipse.jetty" % "jetty-webapp" % "8.1.14.v20131031" % "container",
+        "org.eclipse.jetty" % "jetty-webapp" % "8.1.14.v20131031" % "compile;container",
         "com.beachape.metascraper" %% "metascraper" % "0.2.5",
         "org.scalatra" %% "scalatra-json" % "2.2.2",
         "org.json4s"   %% "json4s-jackson" % "3.2.4", // Going higher than this version breaks Swagger integration
@@ -44,7 +45,7 @@ object MetascraperScalatraBuild extends Build {
         "com.bionicspirit" %% "shade" % "1.5.0",
         "ch.qos.logback" % "logback-classic" % "1.0.13" % "runtime",
         "org.scalatra" %% "scalatra-swagger"  % "2.2.2" exclude("org.slf4j", "log4j12"),
-        "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
+        "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "compile;container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
       )
     )
   )

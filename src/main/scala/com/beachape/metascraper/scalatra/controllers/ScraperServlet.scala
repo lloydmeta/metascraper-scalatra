@@ -1,4 +1,4 @@
-package com.beachape.metascraper.scalatra
+package com.beachape.metascraper.scalatra.controllers
 
 import org.scalatra._
 import com.beachape.metascraper.scalatra.models.{ScraperMemcachedSupport, Scraper}
