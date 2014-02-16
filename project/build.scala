@@ -45,7 +45,8 @@ object MetascraperScalatraBuild extends Build {
         "com.bionicspirit" %% "shade" % "1.5.0",
         "ch.qos.logback" % "logback-classic" % "1.0.13" % "runtime",
         "org.scalatra" %% "scalatra-swagger"  % "2.2.2" exclude("org.slf4j", "log4j12"),
-        "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "compile;container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
+        "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "compile;container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar")),
+        "com.newrelic.agent.java" % "newrelic-agent" % "3.4.2"
       )
     )
   )
