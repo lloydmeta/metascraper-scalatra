@@ -5,6 +5,7 @@ import org.scalatest.FunSuite
 import akka.actor.ActorSystem
 import akka.testkit.TestKit
 import java.net.URLEncoder
+import com.beachape.metascraper.scalatra.controllers.{ScrapperSwagger, ScraperServlet}
 
 class ScraperServletSpec extends TestKit(ActorSystem("testSystem")) with ScalatraSuite with FunSuite {
 

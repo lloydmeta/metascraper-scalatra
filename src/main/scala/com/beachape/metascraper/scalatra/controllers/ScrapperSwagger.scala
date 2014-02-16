@@ -1,4 +1,4 @@
-package com.beachape.metascraper.scalatra
+package com.beachape.metascraper.scalatra.controllers
 
 import org.scalatra.swagger.{JacksonSwaggerBase, Swagger}
 
