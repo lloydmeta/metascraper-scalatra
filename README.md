@@ -1,4 +1,4 @@
-# Metascraper Scalatra # [![Build Status](https://travis-ci.org/lloydmeta/metascraper-scalatra.png?branch=master)](https://travis-ci.org/lloydmeta/metascraper-scalatra)
+# Metascraper Scalatra [![Build Status](https://travis-ci.org/lloydmeta/metascraper-scalatra.png?branch=master)](https://travis-ci.org/lloydmeta/metascraper-scalatra)
 
 This is a [Metascraper](https://github.com/lloydmeta/metascraper) API service built on [Scalatra](http://www.scalatra.org/).
 
