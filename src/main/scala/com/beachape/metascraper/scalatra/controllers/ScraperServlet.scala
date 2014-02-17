@@ -46,8 +46,8 @@ class ScraperServlet(val scraper: Scraper, val memcached: Memcached)(implicit va
       contentType = formats("json")
       val is = fetchCachedScrapedData(url) flatMap {
         /*
-          This is wrapped inside a future because further down, we are inside another future
-          and we need to accomodate by using a flatMap
+          This is wrapped inside a Future because further down, we are inside another future
+          and we need to accommodate by using a flatMap
         */
         case Some(data) => Future.successful(data)
         case None => scraper.scrape(url) map {
