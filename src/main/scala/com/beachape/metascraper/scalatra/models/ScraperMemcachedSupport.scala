@@ -47,5 +47,5 @@ trait ScraperMemcachedSupport extends MemcachedCodecs {
    * @return String
    */
   private def md5Hash(s: String) : String =
-    MessageDigest.getInstance("MD5").digest(s.getBytes()).map(0xFF & _).map("%02X".format(_)).mkString
+    MessageDigest.getInstance("MD5").digest(s.getBytes()).map("%02X".format(_)).mkString
 }
