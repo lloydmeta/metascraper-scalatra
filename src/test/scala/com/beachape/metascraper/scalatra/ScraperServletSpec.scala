@@ -5,14 +5,14 @@ import org.scalatest.FunSuite
 import akka.actor.ActorSystem
 import akka.testkit.TestKit
 import java.net.URLEncoder
-import com.beachape.metascraper.scalatra.controllers.{ScrapperSwagger, ScraperServlet}
+import com.beachape.metascraper.scalatra.controllers.{ScraperSwagger, ScraperServlet}
 
 class ScraperServletSpec extends TestKit(ActorSystem("testSystem")) with ScalatraSuite with FunSuite {
 
   // Get a handle to an ActorSystem
   implicit val testActorSystem = system
   implicit val ec = system.dispatcher
-  implicit val swagger = new ScrapperSwagger
+  implicit val swagger = new ScraperSwagger
 
   val scraperSuccessful = new MockScraper(false)
   val scraperUnsuccessful = new MockScraper(true)

@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import com.beachape.metascraper.scalatra.models.MetadataScraper
 import com.typesafe.config.ConfigFactory
 import shade.memcached.{Memcached, AuthConfiguration, Configuration}
-import com.beachape.metascraper.scalatra.controllers.ScrapperSwagger
+import com.beachape.metascraper.scalatra.controllers.ScraperSwagger
 
 /**
  * Trait that helps initiate the WebApp in order to
@@ -34,6 +34,6 @@ trait ScraperAppSupport {
   }
   val memcached = Memcached(memConfiguration, system.scheduler, ec)
 
-  implicit val swagger = new ScrapperSwagger
+  implicit val swagger = new ScraperSwagger
 
 }

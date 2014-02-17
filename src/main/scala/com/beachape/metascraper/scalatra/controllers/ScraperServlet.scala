@@ -38,6 +38,7 @@ class ScraperServlet(val scraper: Scraper, val memcached: Memcached)(implicit va
     (apiOperation[List[ScrapedData]]("scrape")
       summary "Scrape the metadata from a URL"
       notes s"Scrape the metadata from a URL. Gives images, descriptions, titles, URL. Any valid result is cached for ${cacheDataTTL}."
+      error Error(422, "Something is wrong with the URL requested")
       parameter pathParam[String]("url").description("URL to scrape"))
 
   get("/scrape/:url",  operation(scrape)) {
