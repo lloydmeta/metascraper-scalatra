@@ -28,19 +28,6 @@ class ScraperServletSpec extends TestKit(ActorSystem("testSystem")) with Scalatr
     def pathTo(rootPath: String) = s"/fail${rootPath}"
   }
 
-  test("getting root") {
-    new Successful {
-      get(pathTo("/")) {
-        status should equal (200)
-      }
-    }
-    new UnSuccessful {
-      get(pathTo("/")) {
-        status should equal (200)
-      }
-    }
-  }
-
   test("GETing to /scrape with JSON with a URL parameter when the Scraper is successful") {
     new Successful {
       get(pathTo(String.format("/scrape/%s", URLEncoder.encode("http://lol.com", "UTF-8")))) {
