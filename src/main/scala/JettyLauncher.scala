@@ -1,4 +1,5 @@
 import org.eclipse.jetty.server.Server
+import org.eclipse.jetty.util.thread.QueuedThreadPool
 import org.eclipse.jetty.webapp.WebAppContext
 import org.scalatra.servlet.ScalatraListener
 
@@ -17,7 +18,14 @@ object JettyLauncher {
 
     server.setHandler(context)
 
+    /* Configure Jetty server */
+    val threadPool = new QueuedThreadPool()
+    threadPool.setMinThreads(5)
+    threadPool.setMaxThreads(30)
+    server.setThreadPool(threadPool)
+
     server.setSendServerVersion(false)
+    /* Configure Jetty server */
 
     server.start
     server.join
