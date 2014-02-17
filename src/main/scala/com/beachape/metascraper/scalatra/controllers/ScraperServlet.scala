@@ -43,7 +43,7 @@ class ScraperServlet(val scraper: Scraper, val memcached: Memcached)(implicit va
   val scrape =
     (apiOperation[List[ScrapedData]]("scrape")
       summary "Scrape the metadata from a URL"
-      notes "Scrape the metadata from a URL. Gives images, descriptions, titles, URL."
+      notes s"Scrape the metadata from a URL. Gives images, descriptions, titles, URL. Any valid result is cached for ${cacheDataTTL}."
       parameter pathParam[String]("url").description("URL to scrape"))
 
   get("/scrape/:url",  operation(scrape)) {
