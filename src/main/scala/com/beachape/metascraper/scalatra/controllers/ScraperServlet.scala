@@ -32,13 +32,7 @@ class ScraperServlet(val scraper: Scraper, val memcached: Memcached)(implicit va
 
   val logger = LoggerFactory.getLogger(getClass)
 
-  get("/") {
-    <html>
-      <body>
-        <h1>You are lost!</h1>
-      </body>
-    </html>
-  }
+  get("/") { redirect("/swagger") }
 
   val scrape =
     (apiOperation[List[ScrapedData]]("scrape")
