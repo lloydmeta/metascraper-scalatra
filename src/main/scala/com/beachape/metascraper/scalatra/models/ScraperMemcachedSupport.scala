@@ -6,6 +6,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import org.json4s._
 import org.json4s.jackson.Serialization.{read, write}
 import scala.concurrent.duration.Duration
+import java.security.MessageDigest
 
 
 trait ScraperMemcachedSupport extends MemcachedCodecs {
@@ -25,7 +26,7 @@ trait ScraperMemcachedSupport extends MemcachedCodecs {
    * @return Future[Unit]
    */
 
-  def cacheScrapedData(url: Url, data: ScrapedData): Future[Unit] = memcached.set[String](url, write(data), cacheDataTTL)
+  def cacheScrapedData(url: Url, data: ScrapedData): Future[Unit] = memcached.set[String](md5Hash(url), write(data), cacheDataTTL)
 
   /**
    * Returns a Future[Option[ScrapedData]]
@@ -34,9 +35,17 @@ trait ScraperMemcachedSupport extends MemcachedCodecs {
    * @return Future[Option[ScrapedData]]
    */
   def fetchCachedScrapedData(url: Url): Future[Option[ScrapedData]] = for {
-    maybeString <- memcached.get[String](url)
+    maybeString <- memcached.get[String](md5Hash(url))
   } yield maybeString match {
       case Some(jsonString) => Some(read[ScrapedData](jsonString))
       case _ => None
   }
+
+  /**
+   * Compute the MD5 hash for the URL string to avoid keys being too long
+   * @param s String
+   * @return String
+   */
+  private def md5Hash(s: String) : String =
+    MessageDigest.getInstance("MD5").digest(s.getBytes()).map(0xFF & _).map("%02X".format(_)).mkString
 }
