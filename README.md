@@ -1,8 +1,10 @@
-# Metascraper Scalatra #
+# Metascraper Scalatra # [![Build Status](https://travis-ci.org/lloydmeta/metascraper-scalatra.png?branch=master)](https://travis-ci.org/lloydmeta/metascraper-scalatra)
 
 This is a [Metascraper](https://github.com/lloydmeta/metascraper) API service built on [Scalatra](http://www.scalatra.org/).
 
 Mostly done as a learning exercise, but if it happens to be useful to you, that is a nice by-product.
+
+__Note__ Requires (and tested against) at least JVM 7 and Scala 2.10.x
 
 ## Install and see stuff
 
