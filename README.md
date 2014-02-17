@@ -33,7 +33,15 @@ This Scalatra project is ready to be deployed to Heroku as-is.
 1. Create a Heroku app (either via the web dashboard UI or your heroku commandline tool)
 2. Add a config variable of `ENV` that equals `production` (e.g. `heroku config:set ENV=production`
 3. Provision a Memcachier add-on (if not using Memcachier, modify `application.conf` to point to the proper variables
-4. Push as normal
+4. Provision a NewRelic add-on for your app
+5. Add/Modify the JAVA_OPTS variable for your app to use NewRelic:
+  ```
+  heroku config:set JAVA_OPTS="-Xmx384m -Xss512k -XX:+UseCompressedOops -Dnewrelic.bootstrap_classpath=true -javaagent:target/staged/newrelic-agent-3.4.2.jar"
+  ```
+6. Push as normal
+
+Note: if you don't want to use NewRelic (it does impose some performance penalty), remove it from the app (build.scala)
+before deploying and remove steps 4 and 5.
 
 ## Licence
 
