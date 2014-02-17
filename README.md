@@ -5,6 +5,8 @@ This is a [Metascraper](https://github.com/lloydmeta/metascraper) API service bu
 Mostly done as a learning exercise, but if it happens to be useful to you, that is a nice by-product. Similar to [metascraper-service](https://github.com/lloydmeta/metascraper-service),
 [metascraper-scalatra](https://github.com/lloydmeta/metascraper-scalatra) is completely non-blocking.
 
+You can give it a try at [metascraper.beachape.com](http://metascraper.beachape.com/)
+
 __Note__ Requires (and tested against) at least JVM 7 and Scala 2.10.x
 
 ## Install and see stuff
